@@ -1,16 +1,19 @@
-<?php 
+<?php
+require("./database.php");
+
 class userController
 {
-    public function login($user,$pass){
-        return "Hello Login => ".$user." with password => ".$pass;
+    public function user_login(){
+        $db = new database();
+        $con = $db->initDatabase();
+        $statement = $con->prepare("select * from user_tbl");
+        $statement->execute();
+        $row = $statement->fetchAll();
+        foreach ($row as $data) {
+            echo $data['user']."|".$data['pass']."<br>";
+        }
     }
-    public function register(){
-        return "Hi Register";
-    }
-    public function update(){
-
-    }
-    public function delete(){
+    public function user_register(){
 
     }
 }

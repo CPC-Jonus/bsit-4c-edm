@@ -1,31 +1,21 @@
 <?php
 class database
 {
-    private $host = "";
-    private $user = "";
+    private $host = "localhost";
+    private $user = "root";
     private $pass = "";
-    private $dbname = "";
-    private $con = null;
-    private $status = false;
+    private $dbname = "edm";
 
-    function __construct()
-    {
-        $this->con = $this->initDatabase();
-    }
-
-    public function getCon(){
-        return $this->con;
-    }
-    public function getStatus(){
-        return $this->status;
-    }
-
-
-    private function initDatabase(){
+    public function initDatabase(){
         try {
-            $this->con = null;
-            $this->status = true;
+            $con = new PDO("mysql:host=$this->host;dbname=".$this->dbname, 
+            $this->user, 
+            $this->pass);
+            // set the PDO error mode to exception
+            $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $con;
         } catch (PDOException $th) {
+            echo $th;
             return null;
         }
     }
